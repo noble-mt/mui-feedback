@@ -153,8 +153,6 @@ This is the main component of the Mui-Feedback. This is a context wrapper. It is
 {
   successButtonProps?: ButtonProps // Read https://mui.com/material-ui/api/button/#props
   cancelButtonProps?: ButtonProps // Read https://mui.com/material-ui/api/button/#props
-  hideCancelButton?: boolean
-  hideSuccessButton?: boolean
   hideTopCloseButton?: boolean
   customFooter?: () => ReactNode
   styledDialogComponent?: typeof StyledDialogBox | typeof Dialog // Read https://mui.com/material-ui/react-dialog/#customization
