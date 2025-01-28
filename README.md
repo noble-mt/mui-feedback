@@ -128,9 +128,9 @@ This is the main component of the Mui-Feedback. This is a context wrapper. It is
 
 | Properties | Type | Description | Default
 | --- | --- |--- | ---|
-| alertGlobalProps | [AlertGlobalProps](AlertGlobalProps) |  Global Properties for the alert compoent.| <code>{ <br>  vertical: 'top',<br>  horizontal: 'left'<br />  stackAlerts: false<br>}</code>
-| notificationGlobalProps | <pre> <br>{ <br>  vertical?: 'top' or 'bottom',<br />  horizontal?: 'left' or 'center or 'right'<br /> }</pre> | Global Properties for the alert compoent. These properties can be overridden while invoking the notification | <code>{ <br>  vertical: 'top',<br>  horizontal: 'right'<br> }</pre>
-| confirmGlobalProps | <pre><br/>{ <br />'cancelButtonProps': Properties for Cancel Button. <br />      See full list of parameters [Mui Buttons](https://mui.com/material-ui/api/button/#props) <br /> 'successButtonProps': Properties for Success Button. <br />      See full list of parameters [Mui Buttons](https://mui.com/material-ui/api/button/#props)  <br /> 'componentProps'?: { <br />    dialogProps?: Properties for Dialog. <br />      See full list of parameters [Mui DialogBox](https://mui.com/material-ui/api/dialog/#props)<br />    dialogActionsProps?: Properties for Dialog Action. <br />      See full list of parameters [Mui DialogBox](https://mui.com/material-ui/api/dialog-actions/#props)<br />    dialogContentProps?: Properties for Dialog Content. <br />      See full list of parameters [Mui DialogBox](https://mui.com/material-ui/api/dialog-content/#props)<br />    dialogTitleProps?: Properties for Dialog Title. <br />      See full list of parameters [Mui DialogBox](https://mui.com/material-ui/api/dialog-title/#props)<br />  } <br /> 'styledDialogComponent': Custom Styled Dialog box component.  <br /> 'customFooter': React Node Here <br /> 'hideTopCloseButton': Boolean (Hide the top Close button)  <br /> 'draggable': Boolean (Draggable Modal)<br /> 'position': 'top-left'  'top-center'<br />   'top-right' 'center-left'  'center-center'<br />   'center-right'  'bottom-left'  'bottom-center'<br />   'bottom-right'<br /> 'hideButtonProps': Properties for IconButton. <br />    See full list of parameters [Mui Icon Button](https://mui.com/material-ui/api/icon-button/#props) <br />}<br /></pre> | All these properties can be overridden while invoking the confirm modal so we can call with different properties | <code>{ <br> { position: 'center-center', <br/> scrollable: false,<br/> hideTopCloseButton: false<br/> }<br/><code>
+| alertGlobalProps | [AlertGlobalProps]([AlertGlobalProps](https://github.com/noble-mt/mui-feedback/blob/main/README.md#alertglobalprops)) |  Global Properties for the alert compoent.| <code>{ <br>  vertical: 'top',<br>  horizontal: 'left'<br />  stackAlerts: false<br>}</code>
+| notificationGlobalProps | [NotificationGlobalProps](https://github.com/noble-mt/mui-feedback/main/README.md#notificationglobalprops) | Global Properties for the alert compoent. These properties can be overridden while invoking the notification | <code>{ <br>  vertical: 'top',<br>  horizontal: 'right'<br> }</pre>
+| confirmGlobalProps | [GlobalConfirmProps](https://github.com/noble-mt/mui-feedback/main/README.md#globalconfirmprops) | All these properties can be overridden while invoking the confirm modal so we can call with different properties | <code>{ <br> { position: 'center-center', <br/> scrollable: false,<br/> hideTopCloseButton: false<br/> }<br/><code>
 | theme | Theme.    |  Theme used for the Mui. [See full detail](https://mui.com/material-ui/customization/default-theme/)| 
 
 ###### AlertGlobalProps
@@ -139,6 +139,34 @@ This is the main component of the Mui-Feedback. This is a context wrapper. It is
   vertical?: 'top' | 'bottom',
   horizontal?: 'left' | 'center' | 'right'
   stackAlerts?: boolean
+}
+````
+###### NotificationGlobalProps
+````
+{
+  vertical?: 'top' | 'bottom',
+  horizontal?: 'left' | 'center' | 'right'
+}
+````
+###### GlobalConfirmProps
+````
+{
+  successButtonProps?: ButtonProps;
+  cancelButtonProps?: ButtonProps;
+  hideCancelButton?: boolean;
+  hideSuccessButton?: boolean;
+  hideTopCloseButton?: boolean;
+  customFooter?: () => ReactNode;
+  styledDialogComponent?: typeof StyledDialogBox | typeof Dialog;
+  componentProps?: {
+      dialogProps?: DialogProps
+      dialogActionsProps?: [DialogActionsProps](https://mui.com/material-ui/api/dialog-actions/#props)
+      dialogContentProps?: DialogContentProps
+      dialogTitleProps?: DialogTitleProps
+  }
+  draggable?: boolean;
+  position?: CONFIRM_DIALOG_POSITIONS;
+  hideButtonProps?: IconButtonProps
 }
 ````
 
