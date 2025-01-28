@@ -1,17 +1,23 @@
 {
-  "name": "vite-typescript-npm-package",
-  "version": "1.0.0",
-  "description": "Vite TypeScript library npm package template",
-  "author": "Jason Sturges <jason@jsonsturges.com> (https://jasonsturges.com)",
-  "homepage": "https://github.com/jasonsturges/vite-typescript-npm-package",
-  "repository": "github:jasonsturges/vite-typescript-npm-package",
-  "license": "ISC",
+  "name": "mui-feedback",
+  "version": "1.0.7",
+  "description": "A collection of user-friendly feedback components built with Material-UI, designed to enhance user experience with clear and concise notifications, alerts, and confirmation dialogs.",
   "keywords": [
-    "vite",
-    "typescript",
-    "npm",
-    "package"
+    "mui",
+    "alert",
+    "confirm",
+    "modal",
+    "dialog",
+    "snackbar",
+    "feedback",
+    "react"
   ],
+  "author": "Noble Mathew",
+  "bugs": {
+    "url": "https://github.com/noble-mt/mui-feedback/issues"
+  },
+  "homepage": "https://github.com/noble-mt/mui-feedback#readme",
+  "license": "ISC",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
@@ -27,13 +33,31 @@
     "lint:scripts": "eslint ./src --ext .ts",
     "lint:styles": "stylelint ./**/*.{css,scss}",
     "format:scripts": "prettier ./src --write",
-    "format:styles": "stylelint ./**/*.{css,scss} --fix"
+    "format:styles": "stylelint ./**/*.{css,scss} --fix",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
+    "react-draggable": "^4.4.6"
+  },
+  "peerDependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.4",
+    "@storybook/addon-essentials": "^8.5.1",
+    "@storybook/addon-interactions": "^8.5.1",
+    "@storybook/addon-onboarding": "^8.5.1",
+    "@storybook/blocks": "^8.5.1",
+    "@storybook/react": "^8.5.1",
+    "@storybook/react-vite": "^8.5.1",
+    "@storybook/test": "^8.5.1",
+    "@types/lodash": "^4.17.14",
     "@types/node": "^22.8.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
@@ -44,7 +68,9 @@
     "eslint": "^9.13.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-storybook": "^0.11.2",
     "prettier": "^3.3.3",
+    "storybook": "^8.5.1",
     "stylelint": "^16.10.0",
     "stylelint-config-recommended": "^14.0.1",
     "stylelint-config-sass-guidelines": "^12.1.0",
@@ -52,5 +78,10 @@
     "typescript": "^5.6.3",
     "vite": "^5.4.10",
     "vite-plugin-dts": "^4.3.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
   }
 }

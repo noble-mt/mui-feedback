@@ -1,4 +1,3 @@
-// Main library exports - these are packaged in your distributable
-export const isOdd = (n: number): boolean => {
-  return !!(n & 1);
-};
+export { AlertProvider } from './context/alertContext';
+export type { AlertContent, NotificationContent, ConfirmContent, GlobalConfirmProps, AlertGlobalProps, NotificationGlobalProps } from './context/alertContext';
+export { AlertContext, useAlert, useConfirm, useMuiFeedback, useNotification } from './context/context';
