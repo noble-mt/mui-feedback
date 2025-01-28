@@ -134,7 +134,7 @@ This is the main component of the Mui-Feedback. This is a context wrapper. It is
 | theme | Theme.    |  Theme used for the Mui. [See full detail](https://mui.com/material-ui/customization/default-theme/)| 
 
 ###### AlertGlobalProps
-````
+````javascript
 {
   vertical?: 'top' | 'bottom',
   horizontal?: 'left' | 'center' | 'right'
@@ -142,31 +142,31 @@ This is the main component of the Mui-Feedback. This is a context wrapper. It is
 }
 ````
 ###### NotificationGlobalProps
-````
+````javascript
 {
   vertical?: 'top' | 'bottom',
   horizontal?: 'left' | 'center' | 'right'
 }
 ````
 ###### GlobalConfirmProps
-````
+````javascript
 {
-  successButtonProps?: ButtonProps;
-  cancelButtonProps?: ButtonProps;
-  hideCancelButton?: boolean;
-  hideSuccessButton?: boolean;
-  hideTopCloseButton?: boolean;
-  customFooter?: () => ReactNode;
-  styledDialogComponent?: typeof StyledDialogBox | typeof Dialog;
+  successButtonProps?: ButtonProps // Read https://mui.com/material-ui/api/button/#props
+  cancelButtonProps?: ButtonProps // Read https://mui.com/material-ui/api/button/#props
+  hideCancelButton?: boolean
+  hideSuccessButton?: boolean
+  hideTopCloseButton?: boolean
+  customFooter?: () => ReactNode
+  styledDialogComponent?: typeof StyledDialogBox | typeof Dialog // Read https://mui.com/material-ui/react-dialog/#customization
   componentProps?: {
-      dialogProps?: DialogProps
-      dialogActionsProps?: [DialogActionsProps](https://mui.com/material-ui/api/dialog-actions/#props)
-      dialogContentProps?: DialogContentProps
-      dialogTitleProps?: DialogTitleProps
+      dialogProps?: DialogProps // Read https://mui.com/material-ui/api/dialog/#props
+      dialogActionsProps?: DialogActionsProps // Read https://mui.com/material-ui/api/dialog-actions/#props
+      dialogContentProps?: DialogContentProps // Read https://mui.com/material-ui/api/dialog-content/#props
+      dialogTitleProps?: DialogTitleProps // Read https://mui.com/material-ui/api/dialog-title/#props
   }
-  draggable?: boolean;
-  position?: CONFIRM_DIALOG_POSITIONS;
-  hideButtonProps?: IconButtonProps
+  draggable?: boolean
+  position?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'
+  hideButtonProps?: IconButtonProps // Read https://mui.com/material-ui/api/icon-button/#props
 }
 ````
 
