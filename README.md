@@ -15,6 +15,7 @@ yarn add mui-feedback
 ## Usage
 Mui Feedback can be used in your application as follows:
 
+#### Basic Usage
 ````javascript
 ...import
 import { AlertProvider } from 'mui-feedback';
@@ -59,7 +60,7 @@ function App() {
 }
 
 ````
-
+#### Use with custom MuI Theme
 If we want to pass custom Mui Theme file, we can provide an example as belows
 
 ````typescript
@@ -78,6 +79,41 @@ const RootComponent = () => {
           <App />
         </AlertProvider>
     </ThemeProvider>
+  )
+}
+````
+
+#### Use custom Dialog Styles for Confirm Button
+If we want to use styled Mui Dialog Component.
+````typescript
+
+const CustomDialogBox = styled(Dialog)(({ theme }) => ({
+  "& .MuiPaper-root": {
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: 10,
+    boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.1)",
+  },
+  "& .MuiDialogTitle-root": {
+    color: theme.palette.primary.contrastText,
+    fontWeight: "bold",
+    padding: "8px 24px",
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    backgroundColor: theme.palette.primary.main,
+  },
+  "& .MuiDialogContent-root": {
+    padding: `${theme.spacing(3)} !important`,
+  },
+  "& .MuiDialogActions-root": {
+    padding: theme.spacing(2),
+    justifyContent: "flex-end",
+  },
+}));
+
+const RootComponent = () => {
+  return (
+    <AlertProvider confirmGlobalProps={{ styledDialogComponent: CustomDialogBox }}>
+      <App />
+    </AlertProvider>
   )
 }
 ````
