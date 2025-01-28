@@ -4,7 +4,7 @@ A collection of user-friendly feedback components built with Material-UI, design
 
 ## Installation
 
-````
+````bash
 // with npm
 npm i mui-feedback
 
@@ -13,24 +13,18 @@ yarn add mui-feedback
 ````
 
 ## Usage
-````
+Mui Feedback can be used in your application as follows:
+
+````javascript
 ...import
 import { AlertProvider } from 'mui-feedback';
-import { ThemeProvider } from '@emotion/react';
-import { createTheme } from '@mui/material/styles';
 import { useMuiFeedback } from 'mui-feedback';
-
-const theme = createTheme({
-...
-});
 
 const RootComponent = () => {
   return (
-    <ThemeProvider theme={theme}>
-        <AlertProvider  theme={theme}>
-          <App />
-        </AlertProvider>
-    </ThemeProvider>
+      <AlertProvider>
+        <App />
+      </AlertProvider>
   )
 }
 
@@ -64,4 +58,26 @@ function App() {
   )
 }
 
+````
+
+If we want to pass custom Mui Theme file, we can provide an example as belows
+
+````typescript
+import { AlertProvider } from 'mui-feedback';
+import { ThemeProvider } from '@emotion/react';
+import { createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+...
+});
+
+const RootComponent = () => {
+  return (
+    <ThemeProvider theme={theme}>
+        <AlertProvider  theme={theme}>
+          <App />
+        </AlertProvider>
+    </ThemeProvider>
+  )
+}
 ````
