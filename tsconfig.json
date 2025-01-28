@@ -13,7 +13,7 @@
     "useDefineForClassFields": true,
     "strict": true,
     "skipLibCheck": false,
-    "sourceMap": true,
+    "sourceMap": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
@@ -24,6 +24,6 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules","src/stories", ".storybook"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

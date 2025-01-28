@@ -7,11 +7,11 @@ export default defineConfig({
   base: "./",
   plugins: [dts({ rollupTypes: true }), react()],
   build: {
-    sourcemap: true,
+    sourcemap: false,
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
       name: "mylib",
-      formats: ["es", "cjs", "umd", "iife"],
+      formats: ["es"],
       fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {
