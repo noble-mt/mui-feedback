@@ -1,14 +1,25 @@
-import { useState, ReactNode, useCallback } from "react";
+
 import { Confirm, MuiConfirmProps } from "../components/Confirm/confirm";
 import { MuiAlert, MuiAlertProps } from "../components/Alert/alert";
 import { MuiNotificationProps, Notification } from "../components/Notificaiton/notification";
 import { v4 as uuidv4 } from "uuid";
-import { omit } from "lodash";
 import { AlertContext } from "./context";
 import { HORIZONTAL, VERTICAL } from "../constants/position";
 import { Theme, ThemeProvider, createTheme } from '@mui/material/styles'; 
 import Snackbar from "@mui/material/Snackbar";
 import Box from "@mui/material/Box";
+import { ReactNode, useCallback, useState } from "react";
+
+function omit<T extends Record<string, any>, K extends keyof T>(obj: T, keys: K[]): Omit<T, K> {
+  const newObj: Partial<T> = {};
+
+  for (const key in obj) {
+    if (!keys.includes(key as unknown as K)) {
+      newObj[key] = obj[key];
+    }
+  }
+  return newObj as Omit<T, K>;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getNodeText = (node: any): string => {

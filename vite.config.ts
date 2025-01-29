@@ -6,6 +6,10 @@ import { defineConfig, UserConfig } from "vite";
 export default defineConfig({
   base: "./",
   plugins: [dts({ rollupTypes: true }), react()],
+  define: {
+    'process.env.NODE_ENV': "production",
+  },
+  mode: "production",
   build: {
     sourcemap: false,
     lib: {
@@ -18,8 +22,7 @@ export default defineConfig({
       external: ["react", "react-dom"],
       output: {
         globals: {
-          react: "React",
-          "react-dom": "ReactDOM",
+          react: "React", "react-dom": "ReactDOM",
         },
       },
     },
