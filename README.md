@@ -139,6 +139,9 @@ This is the main component of the Mui-Feedback. This is a context wrapper. It is
   vertical?: 'top' | 'bottom',
   horizontal?: 'left' | 'center' | 'right'
   stackAlerts?: boolean
+  ... 
+  // Along with these properties you can use any props available for mui here https://mui.com/material-ui/api/alert/#props
+  // Except anchorOrigin
 }
 ````
 ###### NotificationGlobalProps
@@ -146,6 +149,9 @@ This is the main component of the Mui-Feedback. This is a context wrapper. It is
 {
   vertical?: 'top' | 'bottom',
   horizontal?: 'left' | 'center' | 'right'
+  ... 
+  // Along with these properties you can use any props available for mui here https://mui.com/material-ui/api/snackbar/#props
+  // except anchorOrigin
 }
 ````
 ###### GlobalConfirmProps
@@ -168,9 +174,9 @@ This is the main component of the Mui-Feedback. This is a context wrapper. It is
 }
 ````
 
-### Methods
+### Hooks For Import Methods
 #### useMuiFeedback
-you can use useMuiFeedback to export all the feedback compoents to you code
+you can use useMuiFeedback to export all the feedback components to you code
 
 Example Usage
 ````typescript
@@ -199,4 +205,76 @@ you can use useNotification to export the notification box function to your code
 Example Usage
 ````typescript
  const notification = useNotification();
+ 
+````
+
+### Methods
+
+#### alert
+Alerts display brief messages for the user without interrupting their use of the app.
+
+````
+alert({
+  message: ReactNode
+  inout: number
+  severity: 'error' | 'info' | 'success' | 'warning'
+  variant: 'filled' | 'outlined' | 'standard'
+  onClose: () => void
+  timeout: number
+  stackAlerts: boolean
+
+  ... 
+  // Along with these properties you can use any props available for mui here https://mui.com/material-ui/api/alert/#props
+  // except anchorOrigin
+})
+````
+
+#### notification
+notification are used for brief notifications of processes that have been or will be performed.
+
+````
+notification({
+  message: ReactNode
+  vertical?: 'top' | 'bottom',
+  horizontal?: 'left' | 'center' | 'right'
+
+  ... 
+  // Along with these properties you can use any props available for mui here https://mui.com/material-ui/api/snackbar/#props
+  // except anchorOrigin
+})
+````
+
+#### confirm
+Confirm inform users about a task and can contain critical information, require decisions, or involve multiple tasks.
+
+````
+confirm({
+  title?: string | React.ReactNode // Modal Title
+  message: string | React.ReactNode  // Modal Content
+  onClose?: () => void // Callback when the user clicks close
+  onSuccess?: () => void // Callback when the user clicks success button
+  successButtonContent?: string | ReactNode // Success Button Text
+  cancelButtonContent?: string | ReactNode // Success Button Text
+  hideCancelButton?: boolean // Hide Cancel Button
+  hideSuccessButton?: boolean  // Hide Success Button
+  customButtons?: ButtonProps[] // Custom Footer Buttons
+
+  // the following properties can be given as global props to the AlertProvider
+  // if given while calling the confirm method it will take priority
+
+  successButtonProps?: ButtonProps // Read https://mui.com/material-ui/api/button/#props
+  cancelButtonProps?: ButtonProps // Read https://mui.com/material-ui/api/button/#props
+  hideTopCloseButton?: boolean
+  customFooter?: () => ReactNode
+  styledDialogComponent?: typeof StyledDialogBox | typeof Dialog // Read https://mui.com/material-ui/react-dialog/#customization
+  componentProps?: {
+      dialogProps?: DialogProps // Read https://mui.com/material-ui/api/dialog/#props
+      dialogActionsProps?: DialogActionsProps // Read https://mui.com/material-ui/api/dialog-actions/#props
+      dialogContentProps?: DialogContentProps // Read https://mui.com/material-ui/api/dialog-content/#props
+      dialogTitleProps?: DialogTitleProps // Read https://mui.com/material-ui/api/dialog-title/#props
+  }
+  draggable?: boolean
+  position?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'
+  hideButtonProps?: IconButtonProps // Read https://mui.com/material-ui/api/icon-button/#props
+})
 ````

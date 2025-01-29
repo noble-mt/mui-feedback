@@ -5,10 +5,10 @@ import { MuiNotificationProps, Notification } from "../components/Notificaiton/n
 import { v4 as uuidv4 } from "uuid";
 import { omit } from "lodash";
 import { AlertContext } from "./context";
-import { Box, Snackbar, Theme } from "@mui/material";
 import { HORIZONTAL, VERTICAL } from "../constants/position";
-import { ThemeProvider } from "@emotion/react";
-import { createTheme } from '@mui/material/styles'; 
+import { Theme, ThemeProvider, createTheme } from '@mui/material/styles'; 
+import Snackbar from "@mui/material/Snackbar";
+import Box from "@mui/material/Box";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getNodeText = (node: any): string => {
@@ -21,7 +21,7 @@ const getNodeText = (node: any): string => {
 const getWordCount = (message: string | ReactNode): number =>
   getNodeText(message).trim().split(/\s+/).length;
 
-export interface AlertContent extends MuiAlertProps {
+export interface AlertContent extends Omit<MuiAlertProps, 'globalProps'> {
   timeout?: number;
   stackAlerts?: boolean;
 }
@@ -38,12 +38,12 @@ export interface NotificationStack extends NotificationContent {
 
 export type ConfirmContent = Omit<MuiConfirmProps, 'globalProps'>
 
-export interface AlertGlobalProps {
+export interface AlertGlobalProps extends Omit<MuiAlertProps, 'onClose' | 'message' | 'globalProps'> {
   vertical?: VERTICAL,
   horizontal?: HORIZONTAL
   stackAlerts?: boolean
 }
-export interface NotificationGlobalProps {
+export interface NotificationGlobalProps extends Omit<MuiNotificationProps, 'open' |'anchorOrigin' | 'globalProps'> {
   vertical?: VERTICAL,
   horizontal?: HORIZONTAL
 }
@@ -104,7 +104,7 @@ export const AlertProvider = ({ children, alertGlobalProps, notificationGlobalPr
               <Snackbar open anchorOrigin={{ vertical: alertGlobalProps?.vertical ?? 'top', horizontal: alertGlobalProps?.horizontal ?? 'left'}}>
                 <Box>
                   {alertContent.map((alert) => (
-                    <MuiAlert key={alert.id} {...alert} onClick={() => handleOnClose(alert)}/>
+                    <MuiAlert key={alert.id} {...alert} onClick={() => handleOnClose(alert)} globalProps={alertGlobalProps} />
                   ))}
                 </Box>
               </Snackbar>

@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import Alert, { AlertProps } from '@mui/material/Alert';
 import { SEVERITY } from "../../constants/severity";
 import { VARIANT } from "../../constants/variant";
+import { AlertGlobalProps } from "context/alertContext";
 
 
 
@@ -13,12 +14,13 @@ export interface MuiAlertProps extends Omit<AlertProps, 'onClose'> {
     severity?: SEVERITY,
     variant?: VARIANT,
     onClose?: () => void,
+    globalProps?: AlertGlobalProps
 }
 
-export const MuiAlert = ({ message, severity = 'success', onClose, variant = 'standard', ...rest }: MuiAlertProps) => {
+export const MuiAlert = ({ message, severity = 'success', onClose, variant = 'standard', globalProps, ...rest }: MuiAlertProps) => {
     return (
         <Box my="8px">
-            <Alert severity={severity} variant={variant} {...rest} onClose={onClose}>{message} </Alert>
+            <Alert severity={severity} variant={variant} {...globalProps} {...rest} onClose={onClose}>{message} </Alert>
         </Box>
     );
 }

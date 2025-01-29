@@ -20,7 +20,7 @@ export const AlertDemo = () => {
     }
     return (
         <Box display="flex" width="100hw" height="100vh" alignItems="center" justifyContent="center">
-            <AlertProvider alertGlobalProps={{ stackAlerts: true, horizontal: horizontal, vertical: vertical }}>
+            <AlertProvider alertGlobalProps={{ stackAlerts: true, horizontal: horizontal, vertical: vertical, classes: { icon: 'alert-icon-class'} }}>
                 <AlertTest horizontal={horizontal} vertical={vertical} handlePositionChange={handlePostionChange} />
             </AlertProvider>
         </Box>
