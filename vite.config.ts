@@ -6,16 +6,12 @@ import { defineConfig, UserConfig } from "vite";
 export default defineConfig({
   base: "./",
   plugins: [dts({ rollupTypes: true }), react()],
-  define: {
-    'process.env.NODE_ENV': "production",
-  },
-  mode: "production",
   build: {
     sourcemap: false,
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
-      name: "mylib",
-      formats: ["es"],
+      name: "mui-feedback",
+      formats: ["cjs"],
       fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {

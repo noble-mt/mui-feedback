@@ -11,6 +11,9 @@ npm i mui-feedback
 // with yarn
 yarn add mui-feedback
 ````
+## Demo
+Code Sandbox Demo
+[Demo](https://thm7zy-5173.csb.app/)
 
 ## Usage
 Mui Feedback can be used in your application as follows:
