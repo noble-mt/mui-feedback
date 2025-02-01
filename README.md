@@ -12,7 +12,7 @@ npm i mui-feedback
 yarn add mui-feedback
 ````
 ## Demo
-[Code Sandbox Demo](https://mui-feedback.netlify.app/)
+[Demo](https://mui-feedback.netlify.app/)
 
 ## Usage
 Mui Feedback can be used in your application as follows:
