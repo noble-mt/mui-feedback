@@ -148,7 +148,7 @@ export const Confirm = ({
   position,
   hideButtonProps
 }: MuiConfirmProps) => {
-  const DialogCustom = styledDialogComponent  ?? StyledDialogBox;
+  const DialogCustom = styledDialogComponent  ?? globalProps?.styledDialogComponent ?? StyledDialogBox;
   return (
     <DialogCustom
       maxWidth="xl"
