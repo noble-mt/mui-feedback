@@ -5,9 +5,12 @@ import { SEVERITY } from "../../constants/severity";
 import { VARIANT } from "../../constants/variant";
 import { AlertGlobalProps } from "context/alertContext";
 
+const horizontalPositionFlexProps = {
+    "center": "center",
+    "left": "flex-start",
+    "right": "flex-end"
+}
 
-
-// import Snackbar from "@mui/material/Snackbar";
 export interface MuiAlertProps extends Omit<AlertProps, 'onClose'> {
     message: ReactNode | string
     inout?: number,
@@ -19,7 +22,7 @@ export interface MuiAlertProps extends Omit<AlertProps, 'onClose'> {
 
 export const MuiAlert = ({ message, severity = 'success', onClose, variant = 'standard', globalProps, ...rest }: MuiAlertProps) => {
     return (
-        <Box my="8px">
+        <Box my="8px" display="flex" justifyContent={horizontalPositionFlexProps[globalProps?.horizontal || 'center']}>
             <Alert severity={severity} variant={variant} {...globalProps} {...rest} onClose={onClose}>{message} </Alert>
         </Box>
     );

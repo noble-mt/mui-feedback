@@ -11,6 +11,7 @@ import Draggable from "react-draggable";
 import { CONFIRM_DIALOG_POSITIONS } from "../../constants/position";
 import { SxProps } from "@mui/material/styles";
 import { GlobalConfirmProps } from "../../context/alertContext";
+import Typography from "@mui/material/Typography";
 
 const PositionStyles: { [key in CONFIRM_DIALOG_POSITIONS]: SxProps } = {
   "top-left": {
@@ -51,24 +52,48 @@ const PositionStyles: { [key in CONFIRM_DIALOG_POSITIONS]: SxProps } = {
   },
 };
 
+
 const StyledDialogBox = styled(Dialog)(({ theme }) => ({
   "& .MuiPaper-root": {
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: 10,
-    boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.1)",
+    borderRadius: 16,
+    boxShadow: "0px 11px 15px -7px rgba(145 158 171 / 0.2), 0px 24px 38px 3px rgba(145 158 171 / 0.14), 0px 9px 46px 8px rgba(145 158 171 / 0.12)",
+    // margin: theme.spacing(2),
+    transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1)",
   },
   "& .MuiDialogTitle-root": {
-    color: theme.palette.primary.main,
-    fontWeight: "bold",
-    padding: "8px 24px",
-    borderBottom: `1px solid ${theme.palette.divider}`,
+    fontWeight: "600",
+    padding: "24px"
   },
   "& .MuiDialogContent-root": {
-    padding: `${theme.spacing(3)} !important`,
+    "& .mui-f-close-button": {
+      color: (theme).palette.grey[800],
+      ...theme.applyStyles('dark', {
+        color: (theme).palette.common.white,
+      }),
+    }
   },
   "& .MuiDialogActions-root": {
-    padding: theme.spacing(2),
+    padding: "16px",
     justifyContent: "flex-end",
+
+    "& .mui-f-success-button": {
+        textTransform: 'none',
+        backgroundColor: (theme).palette.grey[800],
+        color: (theme).palette.common.white,
+        ...theme.applyStyles('dark', {
+          backgroundColor: (theme).palette.common.white,
+          color: (theme).palette.grey[800],
+        }),
+      },
+      "& .mui-f-cancel-button": {
+        textTransform: 'none',
+        borderColor: (theme).palette.grey[800],
+        color: (theme).palette.grey[800],
+        ...theme.applyStyles('dark', {
+          borderColor: (theme).palette.common.white,
+          color: (theme).palette.common.white,
+        }),
+      }
   },
 }));
 
@@ -184,17 +209,20 @@ export const Confirm = ({
             aria-label="close"
             onClick={onClose}
             sx={(theme) => ({
+              width: "30px",
+              height: "30px",
               position: "absolute",
               right: 8,
-              top: 0,
+              top: 8,
               color: theme.palette.grey[500],
             })}
             {...(hideButtonProps ?? globalProps?.hideButtonProps ?? {})}
+            className={`mui-f-close-button ${hideButtonProps?.className ?? globalProps?.hideButtonProps ?? ""}`}
           >
             x
           </IconButton>
         )}
-        {message}
+        <Typography component='div' variant="body1">{message}</Typography>
       </DialogContent>
       <DialogActions {...(componentProps?.dialogActionsProps ?? globalProps?.componentProps?.dialogActionsProps)}>
         {!hideCancelButton && !customFooter ? (
@@ -204,6 +232,7 @@ export const Confirm = ({
             variant="outlined"
             data-testid={"cancel-button"}
             {...(cancelButtonProps ?? globalProps?.cancelButtonProps)}
+            className={`mui-f-cancel-button ${(cancelButtonProps?.className ?? globalProps?.cancelButtonProps) ?? ""}`}
           >
             {cancelButtonContent}
           </Button>
@@ -218,6 +247,7 @@ export const Confirm = ({
             data-testid={"success-button"}
             autoFocus
             {...(successButtonProps ?? globalProps?.successButtonProps)}
+            className={`mui-f-success-button ${successButtonProps?.className ?? globalProps?.successButtonProps ?? ""}`}
           >
             {successButtonContent}
           </Button>

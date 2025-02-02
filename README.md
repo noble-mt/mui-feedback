@@ -12,7 +12,7 @@ npm i mui-feedback
 yarn add mui-feedback
 ````
 ## Demo
-[Demo](https://mui-feedback.netlify.app/)
+[Demo with theme](https://mui-feedback.netlify.app/)
 
 ## Usage
 Mui Feedback can be used in your application as follows:
@@ -140,7 +140,8 @@ This is the main component of the Mui-Feedback. This is a context wrapper. It is
 {
   vertical?: 'top' | 'bottom',
   horizontal?: 'left' | 'center' | 'right'
-  stackAlerts?: boolean
+  stackAlerts?: boolean, // Whether to stackAlerts and display multiple alert. Default false
+  autoHide?: boolean // Whether to hide the alert automatically. Default true
   ... 
   // Along with these properties you can use any props available for mui here https://mui.com/material-ui/api/alert/#props
   // Except anchorOrigin
@@ -210,6 +211,36 @@ Example Usage
  
 ````
 
+#### useCloseAllAlerts
+you can use useCloseAllAlerts to close all the alerts
+
+Example Usage
+````typescript
+ const closeAllAlerts = useCloseAllAlerts();
+ 
+````
+
+#### useCloseAllNotifications
+you can use useCloseAllNotifications to close all the notifications
+
+Example Usage
+````typescript
+ const closeAllNotifications = useCloseAllNotifications();
+ 
+````
+
+#### useCloseAllConfirmations
+you can use useCloseAllConfirmations to close all the dialogs
+
+Example Usage
+````typescript
+ const closeAllConfirmations = useCloseAllConfirmations();
+ 
+````
+
+
+
+
 ### Methods
 
 #### alert
@@ -217,13 +248,15 @@ Alerts display brief messages for the user without interrupting their use of the
 
 ````
 alert({
-  message: ReactNode
-  inout: number
+  message: ReactNode 
+  inout: number // Optional
   severity: 'error' | 'info' | 'success' | 'warning'
   variant: 'filled' | 'outlined' | 'standard'
-  onClose: () => void
-  timeout: number
-  stackAlerts: boolean
+  onClose: () => void // Optional
+  timeout: number // Optional Auto hide Duration. If not provided will use a custom logic to hide the alert based on the 
+                  // length of the message. Long message will stay for long and short message will be quick.
+  stackAlerts: boolean // Optional default true. Whether to display multiple alerts the same time.
+  autoHide: boolean // Optional Whether to auto hide the 
 
   ... 
   // Along with these properties you can use any props available for mui here https://mui.com/material-ui/api/alert/#props
@@ -280,3 +313,13 @@ confirm({
   hideButtonProps?: IconButtonProps // Read https://mui.com/material-ui/api/icon-button/#props
 })
 ````
+
+#### closeAllAlerts
+Close All the existing alerts
+
+#### closeAllNotifications
+Close All the existing notifications
+
+
+#### closeAllConfirmations
+Close All the existing dialogs

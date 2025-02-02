@@ -1,6 +1,6 @@
 {
   "name": "mui-feedback",
-  "version": "1.0.21",
+  "version": "1.0.23",
   "description": "A collection of user-friendly feedback components built with Material-UI, designed to enhance user experience with clear and concise notifications, alerts, and confirmation dialogs.",
   "keywords": [
     "mui",

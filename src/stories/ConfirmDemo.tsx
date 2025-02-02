@@ -5,6 +5,7 @@ import { AlertProvider } from '../context/alertContext';
 import { useContext, useState } from 'react';
 import { MuiConfirmProps } from '../components/Confirm/confirm';
 import { CONFIRM_DIALOG_POSITIONS } from '../constants/position';
+import React from 'react';
 
 
 export const ConfirmDemo = ({ ...rest }: MuiConfirmProps) => {
@@ -27,7 +28,7 @@ export const CustomFooter = () => {
 }
 
 const Demo = ({ ...rest }: MuiConfirmProps) => {
-    const { confirm } = useContext(AlertContext);
+    const { confirm, closeAllConfirmations} = useContext(AlertContext);
     const [position, setPosition] = useState<CONFIRM_DIALOG_POSITIONS>('center-center');
 
     const show = () => {
@@ -63,6 +64,7 @@ const Demo = ({ ...rest }: MuiConfirmProps) => {
                 </FormControl>
             </Box>
             <Button variant='contained' onClick={show}>Click Me</Button>
+            <Button variant='contained' onClick={closeAllConfirmations}>Close All</Button>
         </>
     )
 }

@@ -19,7 +19,7 @@ export const NotificationDemo = () => {
 }
 
 const Demo = () => {
-    const { notification } = useContext(AlertContext);
+    const { notification, closeAllNotifications } = useContext(AlertContext);
     const [count, setCount] = useState<number>(0);
     const [severity, setSeverity] = useState<SEVERITY>('success');
     const [horizontal, setHorizontal] = useState<HORIZONTAL>('right');
@@ -82,6 +82,7 @@ const Demo = () => {
                 </Box>
             </Box>
             <Button variant='contained' onClick={show}>Click Me</Button>
+            <Button variant='contained' onClick={closeAllNotifications}>Close All</Button>
         </>
     )
 }

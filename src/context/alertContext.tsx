@@ -33,6 +33,7 @@ const getWordCount = (message: string | ReactNode): number =>
   getNodeText(message).trim().split(/\s+/).length;
 
 export interface AlertContent extends Omit<MuiAlertProps, 'globalProps'> {
+  autoHide?: boolean;
   timeout?: number;
   stackAlerts?: boolean;
 }
@@ -49,16 +50,16 @@ export interface NotificationStack extends NotificationContent {
 
 export type ConfirmContent = Omit<MuiConfirmProps, 'globalProps'>
 
-export interface AlertGlobalProps extends Omit<MuiAlertProps, 'onClose' | 'message' | 'globalProps'> {
+export interface AlertGlobalProps extends Omit<AlertContent, 'onClose' | 'message' | 'globalProps' | 'timeout'> {
   vertical?: VERTICAL,
   horizontal?: HORIZONTAL
-  stackAlerts?: boolean
+  autoHide?: boolean
 }
-export interface NotificationGlobalProps extends Omit<MuiNotificationProps, 'open' |'anchorOrigin' | 'globalProps'> {
+export interface NotificationGlobalProps extends Omit<NotificationContent, 'open' |'anchorOrigin' | 'globalProps'> {
   vertical?: VERTICAL,
   horizontal?: HORIZONTAL
 }
-export type GlobalConfirmProps = Pick<MuiConfirmProps, 'cancelButtonProps' | 'successButtonProps' | 'componentProps' | 'styledDialogComponent' | 'customFooter' | 'hideTopCloseButton' | 'draggable'| 'position' | 'hideButtonProps'>
+export type GlobalConfirmProps = Pick<ConfirmContent, 'cancelButtonProps' | 'successButtonProps' | 'componentProps' | 'styledDialogComponent' | 'customFooter' | 'hideTopCloseButton' | 'draggable'| 'position' | 'hideButtonProps'>
 
 export const AlertProvider = ({ children, alertGlobalProps, notificationGlobalProps, confirmGlobalProps, theme }
   : { children: ReactNode, alertGlobalProps?: AlertGlobalProps, notificationGlobalProps?: NotificationGlobalProps, confirmGlobalProps?: GlobalConfirmProps, theme?: Theme}) => {
@@ -71,7 +72,7 @@ export const AlertProvider = ({ children, alertGlobalProps, notificationGlobalPr
     NotificationStack[]
   >([]);
   const alert = useCallback(
-    ({ timeout, message, inout = 1000, stackAlerts, ...rest }: AlertContent) => {
+    ({ timeout, message, inout = 1000, autoHide, stackAlerts, ...rest }: AlertContent) => {
       let time = timeout;
       if (!time) {
         const wordCount = getWordCount(message);
@@ -79,9 +80,11 @@ export const AlertProvider = ({ children, alertGlobalProps, notificationGlobalPr
       }
       const id = uuidv4();
       setAlertContent((prev) => [...((stackAlerts || (stackAlerts === undefined && alertGlobalProps?.stackAlerts)) ? prev : []), { ...rest, message, id, timeout: time, inout }]);
-      setTimeout(() => {
-        setAlertContent((stack) => stack.filter((item) => item.id !== id));
-      }, time);
+      if(autoHide !== false || (autoHide === undefined && alertGlobalProps?.autoHide)) {
+        setTimeout(() => {
+          setAlertContent((stack) => stack.filter((item) => item.id !== id));
+        }, time);
+      }
     },
     [alertGlobalProps?.stackAlerts]
   );
@@ -106,8 +109,20 @@ export const AlertProvider = ({ children, alertGlobalProps, notificationGlobalPr
     alert?.onClose?.();
   }
 
+  const closeAllAlerts = () => {
+    setAlertContent([])
+  }
+
+  const closeAllNotifications = () => {
+    setNotificationContent([])
+  }
+
+  const closeAllConfirmations = () => { 
+    setConfirmation(null);
+  }
+
   return (
-    <AlertContext.Provider value={{ confirm, alert, notification }}>
+    <AlertContext.Provider value={{ confirm, alert, notification, closeAllAlerts, closeAllNotifications, closeAllConfirmations }}>
         {children}{" "}
         <ThemeProvider theme={theme ?? defaultTheme}>
           {alertContent?.length > 0

@@ -28,7 +28,7 @@ export const AlertDemo = () => {
 }
 
 const AlertTest = ({ horizontal, vertical, handlePositionChange }: { horizontal: HORIZONTAL, vertical: VERTICAL, handlePositionChange: (position: string) => void }) => {
-    const { alert } = useContext(AlertContext);
+    const { alert, closeAllAlerts } = useContext(AlertContext);
     const [count, setCount] = useState<number>(0);
     const [severity, setSeverity] = useState<SEVERITY>('success');
     const [variant, setVariant] = useState<VARIANT >('standard');
@@ -36,9 +36,9 @@ const AlertTest = ({ horizontal, vertical, handlePositionChange }: { horizontal:
     const show = () => {
         setCount(prev => prev + 1)
         alert({
-            message: "Hello there! You are welcome" + count,
+            message: "Hello there! You are welcome" + (count > 1 ? "DSFJLKSDJFLKJDSLFJ LKJDF LDJSFLKJDL FJLDKJ LSDKJFL KSDJF" : ""),
             severity: severity,
-            variant: variant
+            variant: variant,
         });
     }
     return (
@@ -101,6 +101,7 @@ const AlertTest = ({ horizontal, vertical, handlePositionChange }: { horizontal:
                 </Box>
             </Box>
             <Button variant='contained' onClick={show}>Click Me</Button>
+            <Button variant='contained' onClick={closeAllAlerts}>Clear All Alerts</Button>
         </>
     )
 }

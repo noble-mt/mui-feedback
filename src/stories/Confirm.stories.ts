@@ -2,25 +2,62 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { ConfirmDemo, CustomFooter } from "./ConfirmDemo";
 import { styled, Dialog } from "@mui/material";
 
+// background-color: var(--palette-background-paper);
+// color: var(--palette-text-primary);
+// background-image: none;
+// position: relative;
+// overflow-y: auto;
+// display: flex
+// ;
+// flex-direction: column;
+// max-height: calc(100% - 64px);
+// max-width: 600px;
+// box-shadow: var(--customShadows-dialog);
+// transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+// border-radius: 16px;
+// margin: calc(2* var(--spacing));
+
 const CustomDialogBox = styled(Dialog)(({ theme }) => ({
   "& .MuiPaper-root": {
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: 10,
-    boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.1)",
+    borderRadius: 16,
+    boxShadow: "0px 11px 15px -7px rgba(145 158 171 / 0.2), 0px 24px 38px 3px rgba(145 158 171 / 0.14), 0px 9px 46px 8px rgba(145 158 171 / 0.12)",
+    // margin: theme.spacing(2),
+    transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1)",
   },
   "& .MuiDialogTitle-root": {
-    color: theme.palette.primary.contrastText,
-    fontWeight: "bold",
-    padding: "8px 24px",
-    borderBottom: `1px solid ${theme.palette.divider}`,
-    backgroundColor: theme.palette.primary.main,
+    fontWeight: "600",
+    padding: "24px"
   },
   "& .MuiDialogContent-root": {
-    padding: `${theme.spacing(3)} !important`,
+    "& .mui-f-close-button": {
+      color: (theme).palette.grey[800],
+      ...theme.applyStyles('dark', {
+        color: (theme).palette.common.white,
+      }),
+    }
   },
   "& .MuiDialogActions-root": {
-    padding: theme.spacing(2),
+    padding: "16px",
     justifyContent: "flex-end",
+
+    "& .mui-f-success-button": {
+        textTransform: 'none',
+        backgroundColor: (theme).palette.grey[800],
+        color: (theme).palette.common.white,
+        ...theme.applyStyles('dark', {
+          backgroundColor: (theme).palette.common.white,
+          color: (theme).palette.grey[800],
+        }),
+      },
+      "& .mui-f-cancel-button": {
+        textTransform: 'none',
+        borderColor: (theme).palette.grey[800],
+        color: (theme).palette.grey[800],
+        ...theme.applyStyles('dark', {
+          borderColor: (theme).palette.common.white,
+          color: (theme).palette.common.white,
+        }),
+      }
   },
 }));
 
@@ -57,23 +94,23 @@ export const CustomDialogStyle: Story = {
         },
       },
     },
-    customButtons: [
-      {
-        children: "Agree",
-      },
-      {
-        children: "Not Agree",
-        variant: "contained",
-        color: "primary",
-      },
-    ],
-    hideCancelButton: true,
-    hideSuccessButton: true,
+    // customButtons: [
+    //   {
+    //     children: "Agree",
+    //   },
+    //   {
+    //     children: "Not Agree",
+    //     variant: "contained",
+    //     color: "primary",
+    //   },
+    // ],
+    // hideCancelButton: true,
+    // hideSuccessButton: true,
     title: "Confirm",
     onSuccess: () => {},
     styledDialogComponent: CustomDialogBox,
     hideButtonProps: {
-      style: { color: 'white' }
+      style: { fontWeight: 'bold' }
     }
   },
 };
