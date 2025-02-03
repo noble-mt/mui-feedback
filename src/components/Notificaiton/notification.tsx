@@ -1,6 +1,7 @@
 import Snackbar, { SnackbarProps } from "@mui/material/Snackbar";
 import { HORIZONTAL, VERTICAL } from "../../constants/position";
 import { NotificationGlobalProps } from "../../context/alertContext";
+import { omit } from "../../utils/omit";
 
 export interface MuiNotificationProps extends Omit<SnackbarProps, 'open' |'anchorOrigin'> {
   timeout?: number,
@@ -11,6 +12,11 @@ export interface MuiNotificationProps extends Omit<SnackbarProps, 'open' |'ancho
 
 export const Notification = ({ horizontal, vertical, globalProps, ...rest}: MuiNotificationProps) => {
   return (
-    <Snackbar open anchorOrigin={{ vertical: vertical ?? globalProps?.vertical ?? 'top', horizontal: horizontal ?? globalProps?.horizontal ?? 'center'  }} { ...rest } />
+    <Snackbar
+      open
+      anchorOrigin={{ vertical: vertical ?? globalProps?.vertical ?? 'top', horizontal: horizontal ?? globalProps?.horizontal ?? 'center'  }}
+      { ...omit(globalProps ?? {}, ['vertical', 'horizontal', 'timeout']) }
+      { ...rest }
+    />
   );
 }

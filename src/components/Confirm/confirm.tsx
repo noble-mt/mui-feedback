@@ -77,7 +77,6 @@ const StyledDialogBox = styled(Dialog)(({ theme }) => ({
     justifyContent: "flex-end",
 
     "& .mui-f-success-button": {
-        textTransform: 'none',
         backgroundColor: (theme).palette.grey[800],
         color: (theme).palette.common.white,
         ...theme.applyStyles('dark', {
@@ -86,7 +85,6 @@ const StyledDialogBox = styled(Dialog)(({ theme }) => ({
         }),
       },
       "& .mui-f-cancel-button": {
-        textTransform: 'none',
         borderColor: (theme).palette.grey[800],
         color: (theme).palette.grey[800],
         ...theme.applyStyles('dark', {
@@ -158,8 +156,8 @@ export const Confirm = ({
   message,
   onSuccess,
   onClose = () => {},
-  successButtonProps = {},
-  cancelButtonProps = {},
+  successButtonProps,
+  cancelButtonProps,
   successButtonContent = "Ok",
   cancelButtonContent = "Cancel",
   hideCancelButton,
@@ -208,16 +206,18 @@ export const Confirm = ({
           <IconButton
             aria-label="close"
             onClick={onClose}
-            sx={(theme) => ({
+            {...(hideButtonProps ?? globalProps?.hideButtonProps ?? {})}
+            className={`${(hideButtonProps?.color ?? globalProps?.hideButtonProps?.color) ? '' : 'mui-f-close-button'}
+               ${hideButtonProps?.className ?? globalProps?.hideButtonProps?.className ?? ""}`}
+            sx={{
               width: "30px",
               height: "30px",
               position: "absolute",
               right: 8,
               top: 8,
-              color: theme.palette.grey[500],
-            })}
-            {...(hideButtonProps ?? globalProps?.hideButtonProps ?? {})}
-            className={`mui-f-close-button ${hideButtonProps?.className ?? globalProps?.hideButtonProps ?? ""}`}
+              color: (theme) => theme.palette.grey[500],
+              ...(hideButtonProps?.sx ?? globalProps?.hideButtonProps?.sx ?? {}),
+            }}
           >
             x
           </IconButton>
@@ -225,14 +225,14 @@ export const Confirm = ({
         <Typography component='div' variant="body1">{message}</Typography>
       </DialogContent>
       <DialogActions {...(componentProps?.dialogActionsProps ?? globalProps?.componentProps?.dialogActionsProps)}>
-        {!hideCancelButton && !customFooter ? (
+        {!hideCancelButton && !(customFooter ?? globalProps?.customFooter) ? (
           <Button
             onClick={onClose}
-            color="secondary"
             variant="outlined"
             data-testid={"cancel-button"}
             {...(cancelButtonProps ?? globalProps?.cancelButtonProps)}
-            className={`mui-f-cancel-button ${(cancelButtonProps?.className ?? globalProps?.cancelButtonProps) ?? ""}`}
+            className={`${(cancelButtonProps?.color ?? globalProps?.cancelButtonProps?.color) ? '' : 'mui-f-cancel-button'}
+               ${(cancelButtonProps?.className ?? globalProps?.cancelButtonProps?.className) ?? ""}`}
           >
             {cancelButtonContent}
           </Button>
@@ -247,14 +247,15 @@ export const Confirm = ({
             data-testid={"success-button"}
             autoFocus
             {...(successButtonProps ?? globalProps?.successButtonProps)}
-            className={`mui-f-success-button ${successButtonProps?.className ?? globalProps?.successButtonProps ?? ""}`}
+            className={`${(successButtonProps?.color ?? globalProps?.successButtonProps?.color) ? '' : 'mui-f-success-button'}
+              ${successButtonProps?.className ?? globalProps?.successButtonProps?.className ?? ""}`}
           >
             {successButtonContent}
           </Button>
         ) : (
           ""
         )}
-        {customButtons?.map(({ children, ...rest }, index) => (
+        {!(customFooter ?? globalProps?.customFooter) && customButtons?.map(({ children, ...rest }, index) => (
           <Button color="secondary" variant="outlined" key={index} {...rest}>
             {children}
           </Button>

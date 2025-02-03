@@ -9,17 +9,8 @@ import { Theme, ThemeProvider, createTheme } from '@mui/material/styles';
 import Snackbar from "@mui/material/Snackbar";
 import Box from "@mui/material/Box";
 import { ReactNode, useCallback, useState } from "react";
+import { omit } from "../utils/omit";
 
-function omit<T extends Record<string, any>, K extends keyof T>(obj: T, keys: K[]): Omit<T, K> {
-  const newObj: Partial<T> = {};
-
-  for (const key in obj) {
-    if (!keys.includes(key as unknown as K)) {
-      newObj[key] = obj[key];
-    }
-  }
-  return newObj as Omit<T, K>;
-}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getNodeText = (node: any): string => {
