@@ -52,59 +52,61 @@ const PositionStyles: { [key in CONFIRM_DIALOG_POSITIONS]: SxProps } = {
   },
 };
 
-
 const StyledDialogBox = styled(Dialog)(({ theme }) => ({
   "& .MuiPaper-root": {
     borderRadius: 16,
-    boxShadow: "0px 11px 15px -7px rgba(145 158 171 / 0.2), 0px 24px 38px 3px rgba(145 158 171 / 0.14), 0px 9px 46px 8px rgba(145 158 171 / 0.12)",
+    boxShadow:
+      "0px 11px 15px -7px rgba(145 158 171 / 0.2), 0px 24px 38px 3px rgba(145 158 171 / 0.14), 0px 9px 46px 8px rgba(145 158 171 / 0.12)",
     // margin: theme.spacing(2),
     transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1)",
   },
   "& .MuiDialogTitle-root": {
     fontWeight: "600",
-    padding: "24px"
+    padding: "24px",
   },
   "& .MuiDialogContent-root": {
     "& .mui-f-close-button": {
-      color: (theme).palette.grey[800],
-      ...theme.applyStyles('dark', {
-        color: (theme).palette.common.white,
+      color: theme.palette.grey[800],
+      ...theme.applyStyles("dark", {
+        color: theme.palette.common.white,
       }),
-    }
+    },
   },
   "& .MuiDialogActions-root": {
     padding: "16px",
     justifyContent: "flex-end",
 
     "& .mui-f-success-button": {
-        backgroundColor: (theme).palette.grey[800],
-        color: (theme).palette.common.white,
-        ...theme.applyStyles('dark', {
-          backgroundColor: (theme).palette.common.white,
-          color: (theme).palette.grey[800],
-        }),
-      },
-      "& .mui-f-cancel-button": {
-        borderColor: (theme).palette.grey[800],
-        color: (theme).palette.grey[800],
-        ...theme.applyStyles('dark', {
-          borderColor: (theme).palette.common.white,
-          color: (theme).palette.common.white,
-        }),
-      }
+      backgroundColor: theme.palette.grey[800],
+      color: theme.palette.common.white,
+      ...theme.applyStyles("dark", {
+        backgroundColor: theme.palette.common.white,
+        color: theme.palette.grey[800],
+      }),
+    },
+    "& .mui-f-cancel-button": {
+      borderColor: theme.palette.grey[800],
+      color: theme.palette.grey[800],
+      ...theme.applyStyles("dark", {
+        borderColor: theme.palette.common.white,
+        color: theme.palette.common.white,
+      }),
+    },
   },
 }));
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const parseSxProps = (sx: any, position?: CONFIRM_DIALOG_POSITIONS): any => {
-  return position ? {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ...((sx ?? {}) as any),
-    "& .MuiDialog-container": {
-      ...(PositionStyles?.[`${position}`] ?? {}),
-      ...(sx?.["& .MuiDialog-container"] ?? {}),
-    },
-  } : sx;
+  return position
+    ? {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ...((sx ?? {}) as any),
+        "& .MuiDialog-container": {
+          ...(PositionStyles?.[`${position}`] ?? {}),
+          ...(sx?.["& .MuiDialog-container"] ?? {}),
+        },
+      }
+    : sx;
 };
 
 interface ComponentProps {
@@ -147,7 +149,7 @@ export interface MuiConfirmProps {
   componentProps?: ComponentProps;
   draggable?: boolean;
   position?: CONFIRM_DIALOG_POSITIONS;
-  hideButtonProps?: IconButtonProps
+  hideButtonProps?: IconButtonProps;
 }
 
 export const Confirm = ({
@@ -169,9 +171,12 @@ export const Confirm = ({
   customFooter,
   draggable,
   position,
-  hideButtonProps
+  hideButtonProps,
 }: MuiConfirmProps) => {
-  const DialogCustom = styledDialogComponent  ?? globalProps?.styledDialogComponent ?? StyledDialogBox;
+  const DialogCustom =
+    styledDialogComponent ??
+    globalProps?.styledDialogComponent ??
+    StyledDialogBox;
   return (
     <DialogCustom
       maxWidth="xl"
@@ -179,10 +184,17 @@ export const Confirm = ({
       onClose={onClose}
       aria-labelledby="alert-dialog-title"
       data-testid="confirmation-dialog"
-      PaperComponent={ draggable ?? globalProps?.draggable ? DraggablePaperComponent : undefined }
-      {...(componentProps?.dialogProps ?? globalProps?.componentProps?.dialogProps)}
+      PaperComponent={
+        (draggable ?? globalProps?.draggable)
+          ? DraggablePaperComponent
+          : undefined
+      }
+      {...(componentProps?.dialogProps ??
+        globalProps?.componentProps?.dialogProps)}
       sx={parseSxProps(
-        componentProps?.dialogProps?.sx ?? globalProps?.componentProps?.dialogProps?.sx ?? {},
+        componentProps?.dialogProps?.sx ??
+          globalProps?.componentProps?.dialogProps?.sx ??
+          {},
         position ?? globalProps?.position
       )}
     >
@@ -192,14 +204,21 @@ export const Confirm = ({
           {...(componentProps?.dialogTitleProps ??
             globalProps?.componentProps?.dialogTitleProps)}
           style={{
-            ...(draggable ?? globalProps?.draggable ? { cursor: "move" } : {}),
-            ...(componentProps?.dialogTitleProps?.style ?? globalProps?.componentProps?.dialogTitleProps?.style ?? {}),
+            ...((draggable ?? globalProps?.draggable)
+              ? { cursor: "move" }
+              : {}),
+            ...(componentProps?.dialogTitleProps?.style ??
+              globalProps?.componentProps?.dialogTitleProps?.style ??
+              {}),
           }}
         >
           {title}
         </DialogTitle>
       )}
-      <DialogContent {...(componentProps?.dialogContentProps ?? globalProps?.componentProps?.dialogContentProps)}>
+      <DialogContent
+        {...(componentProps?.dialogContentProps ??
+          globalProps?.componentProps?.dialogContentProps)}
+      >
         {(hideTopCloseButton ?? globalProps?.hideTopCloseButton) ? (
           ""
         ) : (
@@ -207,7 +226,7 @@ export const Confirm = ({
             aria-label="close"
             onClick={onClose}
             {...(hideButtonProps ?? globalProps?.hideButtonProps ?? {})}
-            className={`${(hideButtonProps?.color ?? globalProps?.hideButtonProps?.color) ? '' : 'mui-f-close-button'}
+            className={`${(hideButtonProps?.color ?? globalProps?.hideButtonProps?.color) ? "" : "mui-f-close-button"}
                ${hideButtonProps?.className ?? globalProps?.hideButtonProps?.className ?? ""}`}
             sx={{
               width: "30px",
@@ -216,23 +235,30 @@ export const Confirm = ({
               right: 8,
               top: 8,
               color: (theme) => theme.palette.grey[500],
-              ...(hideButtonProps?.sx ?? globalProps?.hideButtonProps?.sx ?? {}),
+              ...(hideButtonProps?.sx ??
+                globalProps?.hideButtonProps?.sx ??
+                {}),
             }}
           >
             x
           </IconButton>
         )}
-        <Typography component='div' variant="body1">{message}</Typography>
+        <Typography component="div" variant="body1">
+          {message}
+        </Typography>
       </DialogContent>
-      <DialogActions {...(componentProps?.dialogActionsProps ?? globalProps?.componentProps?.dialogActionsProps)}>
+      <DialogActions
+        {...(componentProps?.dialogActionsProps ??
+          globalProps?.componentProps?.dialogActionsProps)}
+      >
         {!hideCancelButton && !(customFooter ?? globalProps?.customFooter) ? (
           <Button
             onClick={onClose}
             variant="outlined"
             data-testid={"cancel-button"}
             {...(cancelButtonProps ?? globalProps?.cancelButtonProps)}
-            className={`${(cancelButtonProps?.color ?? globalProps?.cancelButtonProps?.color) ? '' : 'mui-f-cancel-button'}
-               ${(cancelButtonProps?.className ?? globalProps?.cancelButtonProps?.className) ?? ""}`}
+            className={`${(cancelButtonProps?.color ?? globalProps?.cancelButtonProps?.color) ? "" : "mui-f-cancel-button"}
+               ${cancelButtonProps?.className ?? globalProps?.cancelButtonProps?.className ?? ""}`}
           >
             {cancelButtonContent}
           </Button>
@@ -247,7 +273,7 @@ export const Confirm = ({
             data-testid={"success-button"}
             autoFocus
             {...(successButtonProps ?? globalProps?.successButtonProps)}
-            className={`${(successButtonProps?.color ?? globalProps?.successButtonProps?.color) ? '' : 'mui-f-success-button'}
+            className={`${(successButtonProps?.color ?? globalProps?.successButtonProps?.color) ? "" : "mui-f-success-button"}
               ${successButtonProps?.className ?? globalProps?.successButtonProps?.className ?? ""}`}
           >
             {successButtonContent}
@@ -255,11 +281,12 @@ export const Confirm = ({
         ) : (
           ""
         )}
-        {!(customFooter ?? globalProps?.customFooter) && customButtons?.map(({ children, ...rest }, index) => (
-          <Button color="secondary" variant="outlined" key={index} {...rest}>
-            {children}
-          </Button>
-        ))}
+        {!(customFooter ?? globalProps?.customFooter) &&
+          customButtons?.map(({ children, ...rest }, index) => (
+            <Button color="secondary" variant="outlined" key={index} {...rest}>
+              {children}
+            </Button>
+          ))}
         {customFooter?.()}
       </DialogActions>
     </DialogCustom>

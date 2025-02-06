@@ -1,7 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createContext, useContext } from "react";
-import { AlertContent, ConfirmContent, NotificationContent } from "./alertContext";
-
+import {
+  AlertContent,
+  ConfirmContent,
+  NotificationContent,
+} from "./alertContext";
 
 export const AlertContext = createContext<{
   alert: (_item: AlertContent) => void;
@@ -10,7 +12,6 @@ export const AlertContext = createContext<{
   closeAllAlerts: () => void;
   closeAllNotifications: () => void;
   closeAllConfirmations: () => void;
-
 }>({
   alert: () => {},
   confirm: () => {},
@@ -23,34 +24,33 @@ export const AlertContext = createContext<{
 export const useAlert = () => {
   const context = useContext(AlertContext);
   return context.alert;
-}
+};
 
 export const useConfirm = () => {
   const context = useContext(AlertContext);
   return context.confirm;
-}
+};
 
 export const useNotification = () => {
   const context = useContext(AlertContext);
   return context.notification;
-}
+};
 
 export const useCloseAllAlerts = () => {
   const context = useContext(AlertContext);
   return context.closeAllAlerts;
-}
+};
 
 export const useCloseAllNotifications = () => {
   const context = useContext(AlertContext);
   return context.closeAllNotifications;
-}
+};
 
 export const useCloseAllConfirmations = () => {
   const context = useContext(AlertContext);
   return context.closeAllConfirmations;
-}
-
+};
 
 export const useMuiFeedback = () => {
   return useContext(AlertContext);
-}
+};

@@ -1,16 +1,17 @@
-
 import { Confirm, MuiConfirmProps } from "../components/Confirm/confirm";
 import { MuiAlert, MuiAlertProps } from "../components/Alert/alert";
-import { MuiNotificationProps, Notification } from "../components/Notificaiton/notification";
+import {
+  MuiNotificationProps,
+  Notification,
+} from "../components/Notificaiton/notification";
 import { v4 as uuidv4 } from "uuid";
 import { AlertContext } from "./context";
 import { HORIZONTAL, VERTICAL } from "../constants/position";
-import { Theme, ThemeProvider, createTheme } from '@mui/material/styles'; 
+import { Theme, ThemeProvider, createTheme } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import Box from "@mui/material/Box";
 import { ReactNode, useCallback, useState } from "react";
 import { omit } from "../utils/omit";
-
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getNodeText = (node: any): string => {
@@ -23,7 +24,7 @@ const getNodeText = (node: any): string => {
 const getWordCount = (message: string | ReactNode): number =>
   getNodeText(message).trim().split(/\s+/).length;
 
-export interface AlertContent extends Omit<MuiAlertProps, 'globalProps'> {
+export interface AlertContent extends Omit<MuiAlertProps, "globalProps"> {
   autoHide?: boolean;
   timeout?: number;
   stackAlerts?: boolean;
@@ -32,46 +33,85 @@ export interface AlertStack extends AlertContent {
   id: string;
 }
 
-
-export type NotificationContent = Omit<MuiNotificationProps, 'globalProps'>
+export type NotificationContent = Omit<MuiNotificationProps, "globalProps">;
 export interface NotificationStack extends NotificationContent {
   id: string;
 }
 
+export type ConfirmContent = Omit<MuiConfirmProps, "globalProps">;
 
-export type ConfirmContent = Omit<MuiConfirmProps, 'globalProps'>
-
-export interface AlertGlobalProps extends Omit<AlertContent, 'onClose' | 'message' | 'globalProps' | 'timeout'> {
-  vertical?: VERTICAL,
-  horizontal?: HORIZONTAL
-  autoHide?: boolean
+export interface AlertGlobalProps
+  extends Omit<
+    AlertContent,
+    "onClose" | "message" | "globalProps" | "timeout"
+  > {
+  vertical?: VERTICAL;
+  horizontal?: HORIZONTAL;
+  autoHide?: boolean;
 }
-export interface NotificationGlobalProps extends Omit<NotificationContent, 'open' |'anchorOrigin' | 'globalProps'> {
-  vertical?: VERTICAL,
-  horizontal?: HORIZONTAL
+export interface NotificationGlobalProps
+  extends Omit<NotificationContent, "open" | "anchorOrigin" | "globalProps"> {
+  vertical?: VERTICAL;
+  horizontal?: HORIZONTAL;
 }
-export type GlobalConfirmProps = Pick<ConfirmContent, 'cancelButtonProps' | 'successButtonProps' | 'componentProps' | 'styledDialogComponent' | 'customFooter' | 'hideTopCloseButton' | 'draggable'| 'position' | 'hideButtonProps'>
+export type GlobalConfirmProps = Pick<
+  ConfirmContent,
+  | "cancelButtonProps"
+  | "successButtonProps"
+  | "componentProps"
+  | "styledDialogComponent"
+  | "customFooter"
+  | "hideTopCloseButton"
+  | "draggable"
+  | "position"
+  | "hideButtonProps"
+>;
 
-export const AlertProvider = ({ children, alertGlobalProps, notificationGlobalProps, confirmGlobalProps, theme }
-  : { children: ReactNode, alertGlobalProps?: AlertGlobalProps, notificationGlobalProps?: NotificationGlobalProps, confirmGlobalProps?: GlobalConfirmProps, theme?: Theme}) => {
-  const defaultTheme = createTheme(); 
+export const AlertProvider = ({
+  children,
+  alertGlobalProps,
+  notificationGlobalProps,
+  confirmGlobalProps,
+  theme,
+}: {
+  children: ReactNode;
+  alertGlobalProps?: AlertGlobalProps;
+  notificationGlobalProps?: NotificationGlobalProps;
+  confirmGlobalProps?: GlobalConfirmProps;
+  theme?: Theme;
+}) => {
+  const defaultTheme = createTheme();
   const [alertContent, setAlertContent] = useState<AlertStack[]>([]);
-  const [confirmation, setConfirmation] = useState<ConfirmContent | null>(
-    null
-  );
+  const [confirmation, setConfirmation] = useState<ConfirmContent | null>(null);
   const [notificationContent, setNotificationContent] = useState<
     NotificationStack[]
   >([]);
   const alert = useCallback(
-    ({ timeout, message, inout = 1000, autoHide, stackAlerts, ...rest }: AlertContent) => {
+    ({
+      timeout,
+      message,
+      inout = 1000,
+      autoHide,
+      stackAlerts,
+      ...rest
+    }: AlertContent) => {
       let time = timeout;
       if (!time) {
         const wordCount = getWordCount(message);
         time = (wordCount > 4 ? wordCount : 4) * 1000 + inout * 2;
       }
       const id = uuidv4();
-      setAlertContent((prev) => [...((stackAlerts || (stackAlerts === undefined && alertGlobalProps?.stackAlerts)) ? prev : []), { ...rest, message, id, timeout: time, inout }]);
-      if(autoHide !== false || (autoHide === undefined && alertGlobalProps?.autoHide)) {
+      setAlertContent((prev) => [
+        ...(stackAlerts ||
+        (stackAlerts === undefined && alertGlobalProps?.stackAlerts)
+          ? prev
+          : []),
+        { ...rest, message, id, timeout: time, inout },
+      ]);
+      if (
+        autoHide !== false ||
+        (autoHide === undefined && alertGlobalProps?.autoHide)
+      ) {
         setTimeout(() => {
           setAlertContent((stack) => stack.filter((item) => item.id !== id));
         }, time);
@@ -98,57 +138,80 @@ export const AlertProvider = ({ children, alertGlobalProps, notificationGlobalPr
   const handleOnClose = (alert: AlertStack) => {
     setAlertContent((stack) => stack.filter((item) => item.id !== alert.id));
     alert?.onClose?.();
-  }
+  };
 
   const closeAllAlerts = () => {
-    setAlertContent([])
-  }
+    setAlertContent([]);
+  };
 
   const closeAllNotifications = () => {
-    setNotificationContent([])
-  }
+    setNotificationContent([]);
+  };
 
-  const closeAllConfirmations = () => { 
+  const closeAllConfirmations = () => {
     setConfirmation(null);
-  }
+  };
 
   return (
-    <AlertContext.Provider value={{ confirm, alert, notification, closeAllAlerts, closeAllNotifications, closeAllConfirmations }}>
-        {children}{" "}
-        <ThemeProvider theme={theme ?? defaultTheme}>
-          {alertContent?.length > 0
-            ? 
-              <Snackbar open anchorOrigin={{ vertical: alertGlobalProps?.vertical ?? 'top', horizontal: alertGlobalProps?.horizontal ?? 'left'}}>
-                <Box>
-                  {alertContent.map((alert) => (
-                    <MuiAlert key={alert.id} {...alert} onClick={() => handleOnClose(alert)} globalProps={alertGlobalProps} />
-                  ))}
-                </Box>
-              </Snackbar>
-            : ""}{" "}
-          {notificationContent &&
-            notificationContent.map((notification) => (
-              <Notification key={notification.id} {...notification} globalProps={notificationGlobalProps}/>
-            ))}{" "}
-          {confirmation && (
-            <Confirm
-              onClose={() => {
-                if (confirmation?.onClose) {
-                  confirmation?.onClose();
-                }
-                setConfirmation(null);
-              } }
-              onSuccess={() => {
-                confirmation?.onSuccess?.();
-                setConfirmation(null);
-              } }
-              {...omit(confirmation, ["onClose", "onSuccess"])}
-              globalProps={confirmGlobalProps}
+    <AlertContext.Provider
+      value={{
+        confirm,
+        alert,
+        notification,
+        closeAllAlerts,
+        closeAllNotifications,
+        closeAllConfirmations,
+      }}
+    >
+      {children}{" "}
+      <ThemeProvider theme={theme ?? defaultTheme}>
+        {alertContent?.length > 0 ? (
+          <Snackbar
+            open
+            anchorOrigin={{
+              vertical: alertGlobalProps?.vertical ?? "top",
+              horizontal: alertGlobalProps?.horizontal ?? "left",
+            }}
+          >
+            <Box>
+              {alertContent.map((alert) => (
+                <MuiAlert
+                  key={alert.id}
+                  {...alert}
+                  onClick={() => handleOnClose(alert)}
+                  globalProps={alertGlobalProps}
+                />
+              ))}
+            </Box>
+          </Snackbar>
+        ) : (
+          ""
+        )}{" "}
+        {notificationContent &&
+          notificationContent.map((notification) => (
+            <Notification
+              key={notification.id}
+              {...notification}
+              globalProps={notificationGlobalProps}
             />
-          )}{" "}
-        </ThemeProvider>
+          ))}{" "}
+        {confirmation && (
+          <Confirm
+            onClose={() => {
+              if (confirmation?.onClose) {
+                confirmation?.onClose();
+              }
+              setConfirmation(null);
+            }}
+            onSuccess={() => {
+              confirmation?.onSuccess?.();
+              setConfirmation(null);
+            }}
+            {...omit(confirmation, ["onClose", "onSuccess"])}
+            globalProps={confirmGlobalProps}
+          />
+        )}{" "}
+      </ThemeProvider>
     </AlertContext.Provider>
   );
 };
-
-
