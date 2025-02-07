@@ -20,44 +20,45 @@ import { styled, Dialog } from "@mui/material";
 const CustomDialogBox = styled(Dialog)(({ theme }) => ({
   "& .MuiPaper-root": {
     borderRadius: 16,
-    boxShadow: "0px 11px 15px -7px rgba(145 158 171 / 0.2), 0px 24px 38px 3px rgba(145 158 171 / 0.14), 0px 9px 46px 8px rgba(145 158 171 / 0.12)",
+    boxShadow:
+      "0px 11px 15px -7px rgba(145 158 171 / 0.2), 0px 24px 38px 3px rgba(145 158 171 / 0.14), 0px 9px 46px 8px rgba(145 158 171 / 0.12)",
     // margin: theme.spacing(2),
     transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1)",
   },
   "& .MuiDialogTitle-root": {
     fontWeight: "600",
-    padding: "24px"
+    padding: "24px",
   },
   "& .MuiDialogContent-root": {
     "& .mui-f-close-button": {
-      color: (theme).palette.grey[800],
-      ...theme.applyStyles('dark', {
-        color: (theme).palette.common.white,
+      color: theme.palette.grey[800],
+      ...theme.applyStyles("dark", {
+        color: theme.palette.common.white,
       }),
-    }
+    },
   },
   "& .MuiDialogActions-root": {
     padding: "16px",
     justifyContent: "flex-end",
 
     "& .mui-f-success-button": {
-        textTransform: 'none',
-        backgroundColor: (theme).palette.grey[800],
-        color: (theme).palette.common.white,
-        ...theme.applyStyles('dark', {
-          backgroundColor: (theme).palette.common.white,
-          color: (theme).palette.grey[800],
-        }),
-      },
-      "& .mui-f-cancel-button": {
-        textTransform: 'none',
-        borderColor: (theme).palette.grey[800],
-        color: (theme).palette.grey[800],
-        ...theme.applyStyles('dark', {
-          borderColor: (theme).palette.common.white,
-          color: (theme).palette.common.white,
-        }),
-      }
+      textTransform: "none",
+      backgroundColor: theme.palette.grey[800],
+      color: theme.palette.common.white,
+      ...theme.applyStyles("dark", {
+        backgroundColor: theme.palette.common.white,
+        color: theme.palette.grey[800],
+      }),
+    },
+    "& .mui-f-cancel-button": {
+      textTransform: "none",
+      borderColor: theme.palette.grey[800],
+      color: theme.palette.grey[800],
+      ...theme.applyStyles("dark", {
+        borderColor: theme.palette.common.white,
+        color: theme.palette.common.white,
+      }),
+    },
   },
 }));
 
@@ -110,8 +111,8 @@ export const CustomDialogStyle: Story = {
     onSuccess: () => {},
     styledDialogComponent: CustomDialogBox,
     hideButtonProps: {
-      style: { fontWeight: 'bold' }
-    }
+      style: { fontWeight: "bold" },
+    },
   },
 };
 
